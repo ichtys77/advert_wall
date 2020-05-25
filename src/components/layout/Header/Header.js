@@ -6,12 +6,23 @@ import clsx from 'clsx';
 // import { connect } from 'react-redux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
+import AppBar from '@material-ui/core/AppBar';
+import Toolbar from '@material-ui/core/Toolbar';
+import { PageNav } from '../../layout/PageNav/PageNav';
+
 import styles from './Header.module.scss';
+import { Container } from '@material-ui/core';
 
 const Component = ({className, children}) => (
   <div className={clsx(className, styles.root)}>
-    <h2>Header</h2>
-    {children}
+    <AppBar className = {styles.component}>
+      <Container>
+        <Toolbar disableGutters>
+          <PageNav/>
+        </Toolbar>
+      </Container>
+    </AppBar>
+    <Toolbar/>
   </div>
 );
 

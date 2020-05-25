@@ -6,12 +6,17 @@ import clsx from 'clsx';
 // import { connect } from 'react-redux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
+import Container from '@material-ui/core/Container';
+import { Header } from '../../layout/Header/Header';
+
 import styles from './MainLayout.module.scss';
 
 const Component = ({className, children}) => (
   <div className={clsx(className, styles.root)}>
-    <h2>MainLayout</h2>
-    {children}
+    <Header/>
+    <Container maxWidth='lg'>
+      {children}
+    </Container>
   </div>
 );
 

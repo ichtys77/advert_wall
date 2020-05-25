@@ -1,0 +1,12 @@
+@import '../../../styles/settings.scss';
+
+.link {
+  color: $text-white;
+  font-size: 15px;
+}
+
+.link:hover {
+  background-color: $text-white;
+  color: $main-color;
+  font-size: 15px;
+}

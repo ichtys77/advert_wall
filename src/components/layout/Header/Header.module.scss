@@ -1,4 +1,10 @@
+
 @import '../../../styles/settings.scss';
 
 // .root {
 // }
+
+.component {
+  background-color: $main-color;
+  display: flex;
+}
