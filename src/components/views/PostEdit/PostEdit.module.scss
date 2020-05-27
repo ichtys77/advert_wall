@@ -1,4 +1,29 @@
 @import '../../../styles/settings.scss';
 
-// .root {
-// }
+.root {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+
+  .head {
+    display: flex;
+    justify-content: center;
+  }
+
+  .form {
+    background-color: $text-white;
+    width: 70%;
+    padding: 20px;
+    border-radius: 10px;
+    display:flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .input {
+    width: 100%;
+    margin-bottom: 10px;
+  }
+}

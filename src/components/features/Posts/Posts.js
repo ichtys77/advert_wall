@@ -10,21 +10,21 @@ import styles from './Posts.module.scss';
 export const data = [
   {
     id: 1,
-    name: 'Title 1',
+    name: 'Rent a car',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    phone: '+480010002003',
+    email: 'john.doe@email.com',
   },
   {
     id: 2,
-    name: 'Title 2',
+    name: 'Books for free',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    phone: '+480040005006',
+    email: 'adoe@gmail.com',
   },
   {
     id: 3,
-    name: 'Title 3',
+    name: 'Looking for old computer parts',
     description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    phone: '+480070008009',
+    email: 'lmazurkiewicz@outlook.com',
   },
 ];
 
@@ -35,7 +35,7 @@ const Component = () => (
         key={post.id}
         name={post.name}
         description={post.description}
-        phone={post.phone}
+        email={post.email}
         id={post.id}
       />
     ))}

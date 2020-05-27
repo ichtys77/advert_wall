@@ -3,17 +3,28 @@ import PropTypes from 'prop-types';
 
 import clsx from 'clsx';
 
+import Button from '@material-ui/core/Button';
+import {NavLink} from 'react-router-dom';
+
 // import { connect } from 'react-redux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
 import styles from './NotFound.module.scss';
 
-const Component = ({className, children}) => (
+const Component = ({className}) => (
   <div className={clsx(className, styles.root)}>
-    <h2>NotFound</h2>
-    {children}
+    <div className={styles.head}>
+      <h1 className={styles.title}>Uuuuppps... something goes wrong... please</h1>
+      <Button
+        className={styles.link}
+        component={NavLink}
+        to={process.env.PUBLIC_URL + '/'}
+      > Go Home
+      </Button>
+    </div>
   </div>
 );
+
 
 Component.propTypes = {
   children: PropTypes.node,

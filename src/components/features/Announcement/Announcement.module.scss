@@ -1,18 +1,26 @@
 
 @import '../../../styles/settings.scss';
 
-// .root {
-// }
+.root {
 
-.item {
-  margin-bottom: 20px;
-}
+  .item {
+    margin-bottom: 20px;
+  }
 
-.footer {
-  display: flex;
-  justify-content: space-between;
-}
+  .footer {
+    display: flex;
+    justify-content: space-between;
+  }
 
-.link {
-  text-decoration: none;
+  .link {
+    color: $text-white;
+    background-color: $main-color;
+    height: 40px;
+    text-decoration: none;
+  }
+
+  .link:hover {
+    color: $main-color;
+    background-color: $text-white;
+  }
 }

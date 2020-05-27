@@ -2,16 +2,44 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import clsx from 'clsx';
+import TextField from '@material-ui/core/TextField';
+import Button from '@material-ui/core/Button';
 
 // import { connect } from 'react-redux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
 import styles from './PostEdit.module.scss';
 
-const Component = ({className, children}) => (
+const Component = ({className}) => (
   <div className={clsx(className, styles.root)}>
-    <h2>PostEdit</h2>
-    {children}
+    <div className={styles.head}>
+      <h1>Edit announcement</h1>
+    </div>
+    <form className={styles.form} noValidate autoComplete="off">
+      <TextField
+        className={styles.input}
+        label="id"
+        variant="outlined" />
+      <TextField
+        className={styles.input}
+        label="Name"
+        variant="outlined" />
+      <TextField
+        className={styles.input}
+        label="Description"
+        variant="outlined"
+        multiline="true" />
+      <TextField
+        className={styles.input}
+        label="Email"
+        variant="outlined" />
+      <Button
+        type="submit"
+        className={styles.link}
+        to={process.env.PUBLIC_URL + '/post/:id'}
+      >Submit
+      </Button>
+    </form>
   </div>
 );
 

@@ -1,4 +1,26 @@
 @import '../../../styles/settings.scss';
 
-// .root {
-// }
+.root {
+  display: block;
+
+  .head {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .title {
+    margin-right: 30px;
+  }
+
+  .link {
+    color: $text-white;
+    background-color: $main-color;
+    height: 40px;
+  }
+
+  .link:hover {
+    color: $main-color;
+    background-color: $text-white;
+  }
+}

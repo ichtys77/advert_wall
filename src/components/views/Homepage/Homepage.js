@@ -10,15 +10,11 @@ import clsx from 'clsx';
 
 import styles from './Homepage.module.scss';
 
-const Component = ({className, children}) => (
+const Component = ({className}) => (
   <div className={clsx(className, styles.root)}>
     <div className={styles.head}>
       <h1 className={styles.title}>Recent added</h1>
-      <Button
-        className={styles.link}
-        component={NavLink}
-        to={process.env.PUBLIC_URL + '/post/add'}
-        activeClassName='active'>Add new
+      <Button className={styles.link} component={NavLink} to={process.env.PUBLIC_URL + '/post/add'} activeClassName='active'>Add new
       </Button>
     </div>
     <Posts/>
