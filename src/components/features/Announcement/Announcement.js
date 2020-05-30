@@ -13,7 +13,7 @@ import {NavLink} from 'react-router-dom';
 
 import styles from './Announcement.module.scss';
 
-const Component = ({id, name, description, email}) => (
+const Component = ({id, name, description, email, published, updated, status}) => (
   <div className={styles.root}>
     <Link to={`/post/${id}`} className={styles.link}>
       <Card  className={styles.item}>
@@ -21,18 +21,24 @@ const Component = ({id, name, description, email}) => (
           <Typography
             variant="h5"
             color="primary"
-            paragraph ="true"
+            paragraph = {true}
           >
             {name}
           </Typography>
+          <Typography className={styles.info}>published: {published}</Typography>
+          <Typography className={styles.info}>last edit: {updated}</Typography>
+          <Typography className={styles.info}>status: {status}</Typography>
           <Typography
-            paragraph ="true">
+            paragraph = {true}>
             {description}
           </Typography>
           <div className={styles.footer}>
             <Typography>{email}</Typography>
+
             <Button className={styles.link} component={NavLink} to={process.env.PUBLIC_URL + `/post/${id}/edit`}> Edit </Button>
+
           </div>
+
         </CardContent>
       </Card>
     </Link>
@@ -44,6 +50,11 @@ Component.propTypes = {
   name: PropTypes.string,
   description: PropTypes.string,
   email: PropTypes.string,
+  userLogged: PropTypes.bool,
+  published: PropTypes.string,
+  updated: PropTypes.string,
+  mail: PropTypes.string,
+  status: PropTypes.string,
 };
 
 // const mapStateToProps = state => ({

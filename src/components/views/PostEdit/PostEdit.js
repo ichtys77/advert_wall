@@ -10,29 +10,49 @@ import Button from '@material-ui/core/Button';
 
 import styles from './PostEdit.module.scss';
 
+const data =
+  {
+    id: 1,
+    name: 'Rent a car',
+    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
+    email: 'john.doe@email.com',
+  };
+
 const Component = ({className}) => (
   <div className={clsx(className, styles.root)}>
     <div className={styles.head}>
       <h1>Edit announcement</h1>
     </div>
     <form className={styles.form} noValidate autoComplete="off">
-      <TextField
-        className={styles.input}
-        label="id"
-        variant="outlined" />
-      <TextField
-        className={styles.input}
-        label="Name"
-        variant="outlined" />
-      <TextField
-        className={styles.input}
-        label="Description"
-        variant="outlined"
-        multiline="true" />
-      <TextField
-        className={styles.input}
-        label="Email"
-        variant="outlined" />
+      <div className={styles.row}>
+        <label> <span> Current id:</span> {data.id}</label>
+        <TextField
+          className={styles.input}
+          label="id"
+          variant="outlined" />
+      </div>
+      <div className={styles.row}>
+        <label> <span> Current name: </span> {data.name}</label>
+        <TextField
+          className={styles.input}
+          label="Name"
+          variant="outlined" />
+      </div>
+      <div className={styles.row}>
+        <label> <span> Current description:</span> {data.description}</label>
+        <TextField
+          className={styles.input}
+          label="Description"
+          variant="outlined"
+          multiline="true" />
+      </div>
+      <div className={styles.row}>
+        <label> <span> Current e-mail </span> {data.email}</label>
+        <TextField
+          className={styles.input}
+          label="Email"
+          variant="outlined" />
+      </div>
       <Button
         type="submit"
         className={styles.link}
