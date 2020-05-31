@@ -2,8 +2,8 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import clsx from 'clsx';
+import {connect} from 'react-redux';
 
-// import { connect } from 'react-redux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
 import AppBar from '@material-ui/core/AppBar';
@@ -13,12 +13,12 @@ import { PageNav } from '../../layout/PageNav/PageNav';
 import styles from './Header.module.scss';
 import { Container } from '@material-ui/core';
 
-const Component = ({className, children}) => (
+const Component = ({className, userLogged}) => (
   <div className={clsx(className, styles.root)}>
     <AppBar className = {styles.component}>
       <Container>
         <Toolbar disableGutters>
-          <PageNav userLogged/>
+          <PageNav userLogged = {userLogged}/>
         </Toolbar>
       </Container>
     </AppBar>
@@ -29,20 +29,21 @@ const Component = ({className, children}) => (
 Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
+  userLogged: PropTypes.bool,
 };
 
-// const mapStateToProps = state => ({
-//   someProp: reduxSelector(state),
-// });
+const mapStateToProps = state => ({
+  userLogged: state.userLogged,
+});
 
 // const mapDispatchToProps = dispatch => ({
 //   someAction: arg => dispatch(reduxActionCreator(arg)),
 // });
 
-// const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
+const HeaderContainer = connect(mapStateToProps)(Component);
 
 export {
-  Component as Header,
+  HeaderContainer as Header,
   // Container as Header,
   Component as HeaderComponent,
 };

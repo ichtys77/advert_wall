@@ -2,54 +2,67 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import {Announcement} from '../../features/Announcement/Announcement';
+import Button from '@material-ui/core/Button';
+import {NavLink} from 'react-router-dom';
 
-// import { connect } from 'react-redux';
+import { connect } from 'react-redux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
 import styles from './Post.module.scss';
 
-const data =
-  {
-    id: 1,
-    name: 'Rent a car',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    email: 'john.doe@email.com',
-  };
+const Component = ({posts, match, userLogged}) => {
 
-const Component = ({id, name, description, email}) => (
-  <div className={styles.root}>
-    <div className={styles.head}>
-      <h1 className={styles.title}>Details</h1>
+  const post = posts.data[match.params.id - 1];
+  return (
+    <div className={styles.root}>
+      <div className={styles.head}>
+        <h1 className={styles.title}>Details</h1>
+      </div>
+      <Announcement
+        key={post.id}
+        name={post.name}
+        description={post.description}
+        email={post.email}
+        published={post.published}
+        updated={post.updated}
+        status={post.status}
+      />
+
+      { userLogged === true
+        ?
+        <div className={styles.editButton}>
+          <Button className={styles.link} component={NavLink} to={process.env.PUBLIC_URL + `/post/${post.id}/edit`} activeClassName='active'>Edit</Button>
+        </div>
+        :
+        ''
+      }
+
     </div>
-    <Announcement
-      id={id}
-      name={data.name}
-      description={data.description}
-      email={data.email}
-      userLogged
-    />
-  </div>
-);
-
-Component.propTypes = {
-  id: PropTypes.number,
-  name: PropTypes.string,
-  description: PropTypes.string,
-  email: PropTypes.string,
+  );
 };
 
-// const mapStateToProps = state => ({
-//   someProp: reduxSelector(state),
-// });
+Component.propTypes = {
+  posts: PropTypes.object,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }),
+  userLogged: PropTypes.bool,
+};
+
+const mapStateToProps = state => ({
+  posts: state.posts,
+  userLogged: state.userLogged,
+});
 
 // const mapDispatchToProps = dispatch => ({
 //   someAction: arg => dispatch(reduxActionCreator(arg)),
 // });
 
-// const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
+const Container = connect(mapStateToProps)(Component);
 
 export {
-  Component as Post,
-  // Container as Post,
+  Container as Post,
   Component as PostComponent,
 };

@@ -9,7 +9,7 @@ import styles from './Posts.module.scss';
 
 const Component = ({posts}) => (
   <div className={styles.root}>
-    {posts.map(post =>(
+    {posts.data.map(post =>(
       <Announcement
         key={post.id}
         name={post.name}
@@ -25,7 +25,7 @@ const Component = ({posts}) => (
 );
 
 Component.propTypes = {
-  posts: PropTypes.array,
+  posts: PropTypes.object,
 };
 
 const mapStateToProps = state => ({
@@ -39,7 +39,6 @@ const mapStateToProps = state => ({
 const Container = connect(mapStateToProps)(Component);
 
 export {
-  //Component as Posts,
   Container as Posts,
   Component as PostsComponent,
 };

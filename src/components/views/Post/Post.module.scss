@@ -1,7 +1,9 @@
 @import '../../../styles/settings.scss';
 
 .root {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
 
   .post {
     margin-bottom: 20px;
@@ -10,6 +12,21 @@
   .head {
     display: flex;
     justify-content: center;
+  }
+
+  .editButton {
+    margin: auto;
+  }
+
+  .link {
+    color: $text-white;
+    background-color: $main-color;
+    height: 40px;
+  }
+
+  .link:hover {
+    color: $main-color;
+    background-color: $text-white;
   }
 
   .footer {

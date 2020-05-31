@@ -34,9 +34,9 @@ const Component = ({id, name, description, email, published, updated, status}) =
           </Typography>
           <div className={styles.footer}>
             <Typography>{email}</Typography>
-
+            {/*
             <Button className={styles.link} component={NavLink} to={process.env.PUBLIC_URL + `/post/${id}/edit`}> Edit </Button>
-
+            */}
           </div>
 
         </CardContent>
