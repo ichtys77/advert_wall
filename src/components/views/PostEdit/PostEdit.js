@@ -5,81 +5,100 @@ import clsx from 'clsx';
 import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
-// import { connect } from 'react-redux';
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
+import { connect } from 'react-redux';
+import { editPost } from '../../../redux/postsRedux.js';
 
 import styles from './PostEdit.module.scss';
 
-const data =
-  {
-    id: 1,
-    name: 'Rent a car',
-    description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
-    email: 'john.doe@email.com',
+const Component = ({posts, match, className, editPost}) => {
+
+  const editedPost = posts.data[match.params.id];
+
+  const [post, updatePost] = React.useState({
+    name: '',
+    description: '',
+    email: '',
+  });
+
+  const handleChange = (e, name) => {
+    updatePost({
+      ...post,
+      [name]: e.target.value,
+    });
   };
 
-const Component = ({className}) => (
-  <div className={clsx(className, styles.root)}>
-    <div className={styles.head}>
-      <h1>Edit announcement</h1>
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    editPost({...editedPost, ...post});
+  };
+
+
+  return (
+    <div className={clsx(className, styles.root)}>
+      <div className={styles.head}>
+        <h1>Edit announcement</h1>
+      </div>
+
+      <form className={styles.form} noValidate autoComplete="off" onSubmit={e => handleSubmit(e)}>
+
+        <div className={styles.row}>
+          <label> <span> Current name: </span> {editedPost.name}</label>
+          <TextField
+            className={styles.input}
+            label="Name"
+            variant="outlined"
+            onChange={e => handleChange(e, 'name')}/>
+        </div>
+        <div className={styles.row}>
+          <label> <span> Current description:</span> {editedPost.description}</label>
+          <TextField
+            className={styles.input}
+            label="Description"
+            variant="outlined"
+            multiline="true"
+            onChange={e => handleChange(e, 'description')}/>
+        </div>
+        <div className={styles.row}>
+          <label> <span> Current e-mail </span> {editedPost.email}</label>
+          <TextField
+            className={styles.input}
+            label="Email"
+            variant="outlined"
+            onChange={e => handleChange(e, 'email')}/>
+        </div>
+        <Button
+          type="submit"
+          className={styles.link}
+        >Submit
+        </Button>
+      </form>
     </div>
-    <form className={styles.form} noValidate autoComplete="off">
-      <div className={styles.row}>
-        <label> <span> Current id:</span> {data.id}</label>
-        <TextField
-          className={styles.input}
-          label="id"
-          variant="outlined" />
-      </div>
-      <div className={styles.row}>
-        <label> <span> Current name: </span> {data.name}</label>
-        <TextField
-          className={styles.input}
-          label="Name"
-          variant="outlined" />
-      </div>
-      <div className={styles.row}>
-        <label> <span> Current description:</span> {data.description}</label>
-        <TextField
-          className={styles.input}
-          label="Description"
-          variant="outlined"
-          multiline="true" />
-      </div>
-      <div className={styles.row}>
-        <label> <span> Current e-mail </span> {data.email}</label>
-        <TextField
-          className={styles.input}
-          label="Email"
-          variant="outlined" />
-      </div>
-      <Button
-        type="submit"
-        className={styles.link}
-        to={process.env.PUBLIC_URL + '/post/:id'}
-      >Submit
-      </Button>
-    </form>
-  </div>
-);
+  );
+};
 
 Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
+  posts: PropTypes.object,
+  match: PropTypes.shape({
+    params: PropTypes.shape({
+      id: PropTypes.string,
+    }),
+  }),
+  editPost: PropTypes.func,
 };
 
-// const mapStateToProps = state => ({
-//   someProp: reduxSelector(state),
-// });
+const mapStateToProps = state => ({
+  posts: state.posts,
+});
 
-// const mapDispatchToProps = dispatch => ({
-//   someAction: arg => dispatch(reduxActionCreator(arg)),
-// });
+const mapDispatchToProps = dispatch => ({
+  editPost: post => dispatch(editPost(post)),
+});
 
-// const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
+const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
-  Component as PostEdit,
-  // Container as PostEdit,
+  Container as PostEdit,
   Component as PostEditComponent,
 };

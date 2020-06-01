@@ -12,7 +12,7 @@ import styles from './Post.module.scss';
 
 const Component = ({posts, match, userLogged}) => {
 
-  const post = posts.data[match.params.id - 1];
+  const post = posts.data[match.params.id];
   return (
     <div className={styles.root}>
       <div className={styles.head}>
