@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import clsx from 'clsx';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 import { connect } from 'react-redux';
-import { addPost } from '../../../redux/postsRedux.js';
+import { addPost, getAll } from '../../../redux/postsRedux.js';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 import styles from './PostAdd.module.scss';
 
@@ -35,38 +35,53 @@ const Component = ({className, addPost}) => {
   };
 
   return (
-    <div className={clsx(className, styles.root)}>
-      <div className={styles.head}>
-        <h1>Add new announcement</h1>
+    <ValidatorForm>
+      <div className={clsx(className, styles.root)}>
+        <div className={styles.head}>
+          <h1>Add new announcement</h1>
+        </div>
+        <form className={styles.form}
+          noValidate
+          autoComplete="off"
+          onSubmit={e => handleSubmit(e)}>
+          <TextValidator
+            className={styles.input}
+            label="Name"
+            onChange={e => handleChange(e, 'name')}
+            value={post.name}
+            variant="outlined"
+            validators={['required']}
+            errorMessages={['this field is required']}
+          />
+          <TextValidator
+            className={styles.input}
+            label="Description"
+            onChange={e => handleChange(e, 'description')}
+            value={post.description}
+            variant="outlined"
+            multiline="true"
+            validators={['required']}
+            errorMessages={['this field is required']}
+          />
+          <TextValidator
+            className={styles.input}
+            label="E-mail"
+            onChange={e => handleChange(e, 'email')}
+            name="email"
+            value={post.email}
+            variant="outlined"
+            validators={['required', 'isEmail']}
+            errorMessages={['this field is required', 'email is not valid']}
+          />
+          <Button
+            type="submit"
+            className={styles.link}
+            to={process.env.PUBLIC_URL + '/post/:id'}
+          >Submit
+          </Button>
+        </form>
       </div>
-      <form className={styles.form}
-        noValidate
-        autoComplete="off"
-        onSubmit={e => handleSubmit(e)}>
-        <TextField
-          className={styles.input}
-          label="Name"
-          variant="outlined"
-          onChange={e => handleChange(e, 'name')}/>
-        <TextField
-          className={styles.input}
-          label="Description"
-          variant="outlined"
-          multiline="true"
-          onChange={e => handleChange(e, 'description')}/>
-        <TextField
-          className={styles.input}
-          label="E-mail"
-          variant="outlined"
-          onChange={e => handleChange(e, 'email')}/>
-        <Button
-          type="submit"
-          className={styles.link}
-          to={process.env.PUBLIC_URL + '/post/:id'}
-        >Submit
-        </Button>
-      </form>
-    </div>
+    </ValidatorForm>
   );
 };
 
@@ -77,7 +92,7 @@ Component.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  posts: state.posts,
+  posts: getAll(state),
 });
 
 const mapDispatchToProps = dispatch => ({

@@ -2,11 +2,11 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import clsx from 'clsx';
-import TextField from '@material-ui/core/TextField';
 import Button from '@material-ui/core/Button';
 
 import { connect } from 'react-redux';
 import { editPost } from '../../../redux/postsRedux.js';
+import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 import styles from './PostEdit.module.scss';
 
@@ -34,45 +34,56 @@ const Component = ({posts, match, className, editPost}) => {
 
 
   return (
-    <div className={clsx(className, styles.root)}>
-      <div className={styles.head}>
-        <h1>Edit announcement</h1>
+    <ValidatorForm>
+      <div className={clsx(className, styles.root)}>
+        <div className={styles.head}>
+          <h1>Edit announcement</h1>
+        </div>
+
+        <form className={styles.form} noValidate autoComplete="off" onSubmit={e => handleSubmit(e)}>
+
+          <div className={styles.row}>
+            <label> <span> Current name: </span> {editedPost.name}</label>
+            <TextValidator
+              className={styles.input}
+              label="Name"
+              value={post.name}
+              variant="outlined"
+              onChange={e => handleChange(e, 'name')}
+              validators={['required']}
+              errorMessages={['this field is required']}/>
+          </div>
+          <div className={styles.row}>
+            <label> <span> Current description:</span> {editedPost.description}</label>
+            <TextValidator
+              className={styles.input}
+              label="Description"
+              value={post.description}
+              variant="outlined"
+              multiline="true"
+              onChange={e => handleChange(e, 'description')}
+              validators={['required']}
+              errorMessages={['this field is required']}/>
+          </div>
+          <div className={styles.row}>
+            <label> <span> Current e-mail </span> {editedPost.email}</label>
+            <TextValidator
+              className={styles.input}
+              label="Email"
+              value={post.email}
+              variant="outlined"
+              onChange={e => handleChange(e, 'email')}
+              validators={['required', 'isEmail']}
+              errorMessages={['this field is required', 'email is not valid']}/>
+          </div>
+          <Button
+            type="submit"
+            className={styles.link}
+          >Submit
+          </Button>
+        </form>
       </div>
-
-      <form className={styles.form} noValidate autoComplete="off" onSubmit={e => handleSubmit(e)}>
-
-        <div className={styles.row}>
-          <label> <span> Current name: </span> {editedPost.name}</label>
-          <TextField
-            className={styles.input}
-            label="Name"
-            variant="outlined"
-            onChange={e => handleChange(e, 'name')}/>
-        </div>
-        <div className={styles.row}>
-          <label> <span> Current description:</span> {editedPost.description}</label>
-          <TextField
-            className={styles.input}
-            label="Description"
-            variant="outlined"
-            multiline="true"
-            onChange={e => handleChange(e, 'description')}/>
-        </div>
-        <div className={styles.row}>
-          <label> <span> Current e-mail </span> {editedPost.email}</label>
-          <TextField
-            className={styles.input}
-            label="Email"
-            variant="outlined"
-            onChange={e => handleChange(e, 'email')}/>
-        </div>
-        <Button
-          type="submit"
-          className={styles.link}
-        >Submit
-        </Button>
-      </form>
-    </div>
+    </ValidatorForm>
   );
 };
 
