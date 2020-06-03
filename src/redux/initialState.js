@@ -16,7 +16,7 @@ export const initialState = {
         description: 'Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.',
         email: 'adoe@gmail.com',
         published: '29.05.2020',
-        updated: '30.05.20200',
+        updated: '30.05.2020',
         status: 'published',
       },
       {

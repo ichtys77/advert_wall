@@ -15,6 +15,7 @@ const Component = ({userLogged}) => (
         ?
         <div>
           <Button className={styles.link} component={NavLink} exact to={process.env.PUBLIC_URL + '/'} activeClassName='active'>Home</Button>
+          <Button className={styles.link} component={NavLink} to={process.env.PUBLIC_URL + '/myposts'} activeClassName='active'>My posts</Button>
           <Button className={styles.link} component={NavLink} to={process.env.PUBLIC_URL + '/logout'} activeClassName='active'>Logout</Button>
         </div>
         :

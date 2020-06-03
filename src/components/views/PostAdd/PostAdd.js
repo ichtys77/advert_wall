@@ -76,7 +76,6 @@ const Component = ({className, addPost}) => {
           <Button
             type="submit"
             className={styles.link}
-            to={process.env.PUBLIC_URL + '/post/:id'}
           >Submit
           </Button>
         </form>

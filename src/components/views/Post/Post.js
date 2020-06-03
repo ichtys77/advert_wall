@@ -19,7 +19,7 @@ const Component = ({posts, match, userLogged}) => {
         <h1 className={styles.title}>Details</h1>
       </div>
       <Announcement
-        key={post.id}
+        id={post.id}
         name={post.name}
         description={post.description}
         email={post.email}
