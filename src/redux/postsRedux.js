@@ -80,6 +80,7 @@ export const reducer = (statePart = [], action = {}) => {
         },
       };
     }
+
     default:
       return statePart;
   }

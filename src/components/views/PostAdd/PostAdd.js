@@ -1,4 +1,5 @@
 import React from 'react';
+import { useHistory } from 'react-router-dom';
 import PropTypes from 'prop-types';
 
 import clsx from 'clsx';
@@ -22,6 +23,12 @@ const Component = ({className, addPost}) => {
     status: '',
   });
 
+  const history = useHistory();
+
+  const backNavigate = () => {
+    history.push('/');
+  };
+
   const handleChange = (e, name) => {
     newPost({
       ...post,
@@ -32,6 +39,7 @@ const Component = ({className, addPost}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     addPost(post);
+    backNavigate();
   };
 
   return (

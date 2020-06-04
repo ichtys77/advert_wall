@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import { useHistory } from 'react-router-dom';
 
 import clsx from 'clsx';
 import Button from '@material-ui/core/Button';
@@ -20,6 +21,12 @@ const Component = ({posts, match, className, editPost}) => {
     email: '',
   });
 
+  const history = useHistory();
+
+  const backNavigate = () => {
+    history.push('/myposts');
+  };
+
   const handleChange = (e, name) => {
     updatePost({
       ...post,
@@ -30,6 +37,7 @@ const Component = ({posts, match, className, editPost}) => {
   const handleSubmit = (e) => {
     e.preventDefault();
     editPost({...editedPost, ...post});
+    backNavigate();
   };
 
 
