@@ -19,9 +19,9 @@ const Component = ({posts, match, userLogged}) => {
         <h1 className={styles.title}>Details</h1>
       </div>
       <Announcement
-        id={post.id}
+        id={post._id}
         name={post.name}
-        description={post.description}
+        description={post.text}
         email={post.email}
         published={post.published}
         updated={post.updated}

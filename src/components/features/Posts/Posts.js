@@ -3,40 +3,64 @@ import PropTypes from 'prop-types';
 
 import {Announcement} from '../Announcement/Announcement';
 import { connect } from 'react-redux';
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
+import { getAll, fetchPublished } from '../../../redux/postsRedux.js';
 
 import styles from './Posts.module.scss';
+import {Link} from 'react-router-dom';
 
-const Component = ({posts}) => (
-  <div className={styles.root}>
-    {posts.data.map(post =>(
-      <Announcement
-        key={post.id}
-        name={post.name}
-        description={post.description}
-        email={post.email}
-        id={post.id}
-        published={post.published}
-        updated={post.updated}
-        status={post.status}
-      />
-    ))}
-  </div>
-);
+class Component extends React.Component {
+
+  componentDidMount() {
+    const { fetchPublishedPosts } = this.props;
+
+    fetchPublishedPosts();
+  }
+
+  render() {
+    const { posts } = this.props;
+
+    return (
+      <div className={styles.root}>
+        {posts.map(post =>(
+        // eslint-disable-next-line react/jsx-key
+          <Link key={post.id} to={`/post/${post.id}`} className={styles.link}>
+            <Announcement
+              name={post.title}
+              description={post.text}
+              published={post.created}
+              updated={post.updated}
+              email={post.author}
+              status={post.status}
+              id={post._id}
+            />
+          </Link>
+        ))}
+      </div>
+    );
+
+  }
+}
+
+
 
 Component.propTypes = {
-  posts: PropTypes.object,
+  posts: PropTypes.array,
+  fetchPublishedPosts: PropTypes.func,
+  loading: PropTypes.shape({
+    active: PropTypes.bool,
+    error: PropTypes.oneOfType([PropTypes.bool,PropTypes.string]),
+  }),
 };
 
 const mapStateToProps = state => ({
-  posts: state.posts,
+  posts: getAll(state),
 });
 
-// const mapDispatchToProps = dispatch => ({
-//   someAction: arg => dispatch(reduxActionCreator(arg)),
-// });
+const mapDispatchToProps = dispatch => ({
+  fetchPublishedPosts: () => dispatch(fetchPublished()),
+});
 
-const Container = connect(mapStateToProps)(Component);
+const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
   Container as Posts,
