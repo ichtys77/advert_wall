@@ -4,16 +4,15 @@ import PropTypes from 'prop-types';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
+
 import {Link} from 'react-router-dom';
-import {NavLink} from 'react-router-dom';
 
 // import { connect } from 'react-redux';
 // import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
 
 import styles from './Announcement.module.scss';
 
-const Component = ({id, name, description, email, published, updated, status}) => (
+const Component = ({id, title, text, author, created, updated, status}) => (
   <div className={styles.root}>
     <Link to={`/post/${id}`} className={styles.link}>
       <Card  className={styles.item}>
@@ -23,17 +22,17 @@ const Component = ({id, name, description, email, published, updated, status}) =
             color="primary"
             paragraph = {true}
           >
-            {name}
+            {title}
           </Typography>
-          <Typography className={styles.info}>published: {published}</Typography>
+          <Typography className={styles.info}>published: {created}</Typography>
           <Typography className={styles.info}>last edit: {updated}</Typography>
           <Typography className={styles.info}>status: {status}</Typography>
           <Typography
             paragraph = {true}>
-            {description}
+            {text}
           </Typography>
           <div className={styles.footer}>
-            <Typography>{email}</Typography>
+            <Typography>{author}</Typography>
             {/*
             <Button className={styles.link} component={NavLink} to={process.env.PUBLIC_URL + `/post/${id}/edit`}> Edit </Button>
             */}
@@ -46,15 +45,14 @@ const Component = ({id, name, description, email, published, updated, status}) =
 );
 
 Component.propTypes = {
-  id: PropTypes.number,
-  name: PropTypes.string,
-  description: PropTypes.string,
-  email: PropTypes.string,
-  userLogged: PropTypes.bool,
-  published: PropTypes.string,
+  id: PropTypes.string,
+  title: PropTypes.string,
+  text: PropTypes.string,
+  author: PropTypes.string,
+  created: PropTypes.string,
   updated: PropTypes.string,
-  mail: PropTypes.string,
   status: PropTypes.string,
+  userLogged: PropTypes.bool,
 };
 
 // const mapStateToProps = state => ({

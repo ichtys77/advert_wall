@@ -6,24 +6,27 @@ import Button from '@material-ui/core/Button';
 import {NavLink} from 'react-router-dom';
 
 import { connect } from 'react-redux';
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
+import { getAll } from '../../../redux/postsRedux';
 
 import styles from './Post.module.scss';
 
 const Component = ({posts, match, userLogged}) => {
 
-  const post = posts.data[match.params.id];
+  console.log('posts', posts);
+  const post = posts[0];
+
+  console.log('post', post);
   return (
     <div className={styles.root}>
       <div className={styles.head}>
         <h1 className={styles.title}>Details</h1>
       </div>
       <Announcement
+        title={post.title}
+        text={post.text}
+        author={post.author}
         id={post._id}
-        name={post.name}
-        description={post.text}
-        email={post.email}
-        published={post.published}
+        created={post.created}
         updated={post.updated}
         status={post.status}
       />
@@ -42,7 +45,7 @@ const Component = ({posts, match, userLogged}) => {
 };
 
 Component.propTypes = {
-  posts: PropTypes.object,
+  posts: PropTypes.array,
   match: PropTypes.shape({
     params: PropTypes.shape({
       id: PropTypes.string,
@@ -52,7 +55,7 @@ Component.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  posts: state.posts,
+  posts: getAll(state),
   userLogged: state.userLogged,
 });
 

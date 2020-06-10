@@ -3,10 +3,9 @@ import PropTypes from 'prop-types';
 
 import {Announcement} from '../Announcement/Announcement';
 import { connect } from 'react-redux';
-import { getAll, fetchPublished } from '../../../redux/postsRedux.js';
+import { getAll, fetchPublished } from '../../../redux/postsRedux';
 
 import styles from './Posts.module.scss';
-import {Link} from 'react-router-dom';
 
 class Component extends React.Component {
 
@@ -16,32 +15,27 @@ class Component extends React.Component {
     fetchPublishedPosts();
   }
 
-  render() {
+  render () {
     const { posts } = this.props;
-
+    console.log('posts', posts);
     return (
       <div className={styles.root}>
         {posts.map(post =>(
-        // eslint-disable-next-line react/jsx-key
-          <Link key={post.id} to={`/post/${post.id}`} className={styles.link}>
-            <Announcement
-              name={post.title}
-              description={post.text}
-              published={post.created}
-              updated={post.updated}
-              email={post.author}
-              status={post.status}
-              id={post._id}
-            />
-          </Link>
+          <Announcement
+            key={post._id}
+            title={post.title}
+            text={post.text}
+            author={post.author}
+            id={post._id}
+            created={post.created}
+            updated={post.updated}
+            status={post.status}
+          />
         ))}
       </div>
     );
-
   }
 }
-
-
 
 Component.propTypes = {
   posts: PropTypes.array,
@@ -59,6 +53,7 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => ({
   fetchPublishedPosts: () => dispatch(fetchPublished()),
 });
+
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
