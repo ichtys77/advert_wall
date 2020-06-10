@@ -13,7 +13,9 @@ import styles from './Post.module.scss';
 const Component = ({posts, match, userLogged}) => {
 
   console.log('posts', posts);
-  const post = posts[0];
+  const postId = match.params.id;
+  console.log(postId);
+  const post = posts.find(item => item._id === postId);
 
   console.log('post', post);
   return (
@@ -34,7 +36,7 @@ const Component = ({posts, match, userLogged}) => {
       { userLogged === true
         ?
         <div className={styles.editButton}>
-          <Button className={styles.link} component={NavLink} to={process.env.PUBLIC_URL + `/post/${post.id}/edit`} activeClassName='active'>Edit</Button>
+          <Button className={styles.link} component={NavLink} to={process.env.PUBLIC_URL + `/post/${post._id}/edit`} activeClassName='active'>Edit</Button>
         </div>
         :
         ''

@@ -13,7 +13,10 @@ import styles from './PostEdit.module.scss';
 
 const Component = ({posts, match, className, editPost}) => {
 
-  const editedPost = posts.data[match.params.id];
+  console.log('posts', posts);
+  const editedPostId = match.params.id;
+  console.log(editedPostId);
+  const editedPost = posts.data.find(item => item._id === editedPostId);
 
   const [post, updatePost] = React.useState({
     name: '',
@@ -51,36 +54,36 @@ const Component = ({posts, match, className, editPost}) => {
         <form className={styles.form} noValidate autoComplete="off" onSubmit={e => handleSubmit(e)}>
 
           <div className={styles.row}>
-            <label> <span> Current name: </span> {editedPost.name}</label>
+            <label> <span> Current title: </span> {editedPost.title}</label>
             <TextValidator
               className={styles.input}
-              label="Name"
-              value={post.name}
+              label="Title"
+              value={post.title}
               variant="outlined"
-              onChange={e => handleChange(e, 'name')}
+              onChange={e => handleChange(e, 'title')}
               validators={['required']}
               errorMessages={['this field is required']}/>
           </div>
           <div className={styles.row}>
-            <label> <span> Current description:</span> {editedPost.description}</label>
+            <label> <span> Current description:</span> {editedPost.text}</label>
             <TextValidator
               className={styles.input}
               label="Description"
-              value={post.description}
+              value={post.text}
               variant="outlined"
               multiline="true"
-              onChange={e => handleChange(e, 'description')}
+              onChange={e => handleChange(e, 'text')}
               validators={['required']}
               errorMessages={['this field is required']}/>
           </div>
           <div className={styles.row}>
-            <label> <span> Current e-mail </span> {editedPost.email}</label>
+            <label> <span> Current e-mail: </span> {editedPost.author}</label>
             <TextValidator
               className={styles.input}
               label="Email"
-              value={post.email}
+              value={post.author}
               variant="outlined"
-              onChange={e => handleChange(e, 'email')}
+              onChange={e => handleChange(e, 'author')}
               validators={['required', 'isEmail']}
               errorMessages={['this field is required', 'email is not valid']}/>
           </div>
