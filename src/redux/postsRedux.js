@@ -22,13 +22,14 @@ export const editPost = payload => ({payload, type: EDIT_POST});
 
 /* thunk creators */
 export const fetchPublished = () => {
-  return (dispatch, getState) => {
+  return async dispatch => {
     dispatch(fetchStarted());
 
     Axios
       .get('http://localhost:8000/api/posts')
       .then(res => {
         dispatch(fetchSuccess(res.data));
+        console.log('get response');
       })
       .catch(err => {
         dispatch(fetchError(err.message || true));
@@ -36,6 +37,22 @@ export const fetchPublished = () => {
   };
 };
 
+export const addRequest = (post) => {
+  return async dispatch => {
+    dispatch(fetchStarted());
+
+    Axios
+      .post('http://localhost:8000/api/posts', post)
+      .then(res => {
+        dispatch(addPost(res.data));
+        //dispatch(fetchSuccess(res.data));
+        console.log('post succes');
+      })
+      .catch(err => {
+        dispatch(fetchError(err.message || true));
+      });
+  };
+};
 
 /* reducer */
 export const reducer = (statePart = [], action = {}) => {

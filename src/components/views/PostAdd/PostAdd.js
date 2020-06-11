@@ -6,21 +6,24 @@ import clsx from 'clsx';
 import Button from '@material-ui/core/Button';
 
 import { connect } from 'react-redux';
-import { addPost, getAll } from '../../../redux/postsRedux.js';
+import { getAll, addRequest } from '../../../redux/postsRedux.js';
 import { ValidatorForm, TextValidator } from 'react-material-ui-form-validator';
 
 import styles from './PostAdd.module.scss';
 
-const Component = ({className, addPost}) => {
+const Component = ({className, addRequestPost}) => {
 
   const [post, newPost] = React.useState({
-    id: '',
-    name: '',
-    description: '',
-    email: '',
-    published: '',
+    author: '',
+    created: '',
     updated: '',
     status: '',
+    title: '',
+    text: '',
+    photo: '',
+    price: '',
+    phone: '',
+    location: '',
   });
 
   const history = useHistory();
@@ -38,7 +41,7 @@ const Component = ({className, addPost}) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    addPost(post);
+    addRequestPost(post);
     backNavigate();
   };
 
@@ -54,9 +57,9 @@ const Component = ({className, addPost}) => {
           onSubmit={e => handleSubmit(e)}>
           <TextValidator
             className={styles.input}
-            label="Name"
-            onChange={e => handleChange(e, 'name')}
-            value={post.name}
+            label="Title"
+            onChange={e => handleChange(e, 'title')}
+            value={post.title}
             variant="outlined"
             validators={['required']}
             errorMessages={['this field is required']}
@@ -64,8 +67,8 @@ const Component = ({className, addPost}) => {
           <TextValidator
             className={styles.input}
             label="Description"
-            onChange={e => handleChange(e, 'description')}
-            value={post.description}
+            onChange={e => handleChange(e, 'text')}
+            value={post.text}
             variant="outlined"
             multiline="true"
             validators={['required']}
@@ -74,9 +77,9 @@ const Component = ({className, addPost}) => {
           <TextValidator
             className={styles.input}
             label="E-mail"
-            onChange={e => handleChange(e, 'email')}
-            name="email"
-            value={post.email}
+            onChange={e => handleChange(e, 'author')}
+            name="author"
+            value={post.author}
             variant="outlined"
             validators={['required', 'isEmail']}
             errorMessages={['this field is required', 'email is not valid']}
@@ -95,7 +98,7 @@ const Component = ({className, addPost}) => {
 Component.propTypes = {
   children: PropTypes.node,
   className: PropTypes.string,
-  addPost: PropTypes.func,
+  addRequestPost: PropTypes.func,
 };
 
 const mapStateToProps = state => ({
@@ -103,7 +106,7 @@ const mapStateToProps = state => ({
 });
 
 const mapDispatchToProps = dispatch => ({
-  addPost: post => dispatch(addPost(post)),
+  addRequestPost: post => dispatch(addRequest(post)),
 });
 
 const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
