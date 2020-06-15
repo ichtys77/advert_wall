@@ -43,4 +43,19 @@ router.get('/posts/:id', async (req, res) => {
   }
 });
 
+router.get('/myposts', async (req, res) => {
+  try {
+    const result = await Post
+      .find({author: 'mazurkiewicz_l@outlook.com'});
+      //.select('author created title photo')
+      //.sort({created: -1});
+    if(!result) res.status(404).json({ post: 'Not found' });
+    else res.json(result);
+  }
+  catch(err) {
+    res.status(500).json(err);
+  }
+});
+
+
 module.exports = router;

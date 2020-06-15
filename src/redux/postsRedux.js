@@ -1,6 +1,8 @@
 import Axios from 'axios';
+import { API_URL } from '../config';
 /* selectors */
 export const getAll = ({posts}) => posts.data;
+export const getPostsByAuthor = ({posts}) => posts.data.filter(posts => posts.author === 'mazurkiewicz_l@outlook.com');
 
 /* action name creator */
 const reducerName = 'posts';
@@ -8,6 +10,7 @@ const createActionName = name => `app/${reducerName}/${name}`;
 
 /* action types */
 const FETCH_START = createActionName('FETCH_START');
+const FETCH_END = createActionName('FETCH_END');
 const FETCH_SUCCESS = createActionName('FETCH_SUCCESS');
 const FETCH_ERROR = createActionName('FETCH_ERROR');
 const ADD_POST = createActionName('ADD_POST');
@@ -15,6 +18,7 @@ const EDIT_POST = createActionName('EDIT_POST');
 
 /* action creators */
 export const fetchStarted = payload => ({ payload, type: FETCH_START });
+export const fetchEnd = payload => ({ payload, type: FETCH_END });
 export const fetchSuccess = payload => ({ payload, type: FETCH_SUCCESS });
 export const fetchError = payload => ({ payload, type: FETCH_ERROR });
 export const addPost = payload => ({payload, type: ADD_POST});
@@ -26,9 +30,10 @@ export const fetchPublished = () => {
     dispatch(fetchStarted());
 
     Axios
-      .get('http://localhost:8000/api/posts')
+      .get(`${API_URL}/posts`)
       .then(res => {
         dispatch(fetchSuccess(res.data));
+        dispatch(fetchEnd());
         console.log('get response');
       })
       .catch(err => {
@@ -42,7 +47,7 @@ export const addRequest = (post) => {
     dispatch(fetchStarted());
 
     Axios
-      .post('http://localhost:8000/api/posts', post)
+      .post(`${API_URL}/posts`, post)
       .then(res => {
         dispatch(addPost(res.data));
         //dispatch(fetchSuccess(res.data));
@@ -64,6 +69,16 @@ export const reducer = (statePart = [], action = {}) => {
           active: true,
           error: false,
         },
+      };
+    }
+    case FETCH_END: {
+      return {
+        ...statePart,
+        loading: {
+          active: false,
+          error: null,
+          success: true,
+        } ,
       };
     }
     case FETCH_SUCCESS: {

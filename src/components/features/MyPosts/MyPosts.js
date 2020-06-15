@@ -1,37 +1,64 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import clsx from 'clsx';
-
-// import { connect } from 'react-redux';
-// import { reduxSelector, reduxActionCreator } from '../../../redux/exampleRedux.js';
+import {Announcement} from '../Announcement/Announcement';
+import { connect } from 'react-redux';
+import { getPostsByAuthor, fetchPublished } from '../../../redux/postsRedux';
 
 import styles from './MyPosts.module.scss';
 
-const Component = ({className, children}) => (
-  <div className={clsx(className, styles.root)}>
-    <h2>MyPosts</h2>
-    {children}
-  </div>
-);
+class Component extends React.Component {
+
+  componentDidMount() {
+    const { fetchPublishedPosts } = this.props;
+
+    fetchPublishedPosts();
+  }
+
+  render () {
+    const { posts } = this.props;
+    console.log('posts', posts);
+    return (
+      <div className={styles.root}>
+        {posts.map(post =>(
+          <Announcement
+            key={post._id}
+            title={post.title}
+            text={post.text}
+            author={post.author}
+            id={post._id}
+            created={post.created}
+            updated={post.updated}
+            status={post.status}
+          />
+        ))}
+      </div>
+    );
+  }
+}
 
 Component.propTypes = {
-  children: PropTypes.node,
-  className: PropTypes.string,
+  posts: PropTypes.array,
+  fetchPublishedPosts: PropTypes.func,
+  loading: PropTypes.shape({
+    active: PropTypes.bool,
+    error: PropTypes.oneOfType([PropTypes.bool,PropTypes.string]),
+  }),
 };
 
-// const mapStateToProps = state => ({
-//   someProp: reduxSelector(state),
-// });
+const mapStateToProps = state => ({
+  posts: getPostsByAuthor(state),
+});
 
-// const mapDispatchToProps = dispatch => ({
-//   someAction: arg => dispatch(reduxActionCreator(arg)),
-// });
+const mapDispatchToProps = dispatch => ({
+  fetchPublishedPosts: () => dispatch(fetchPublished()),
+});
 
-// const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
+
+const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
 
 export {
-  Component as MyPosts,
+  Container as MyPosts,
   // Container as MyPosts,
   Component as MyPostsComponent,
 };

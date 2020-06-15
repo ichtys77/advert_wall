@@ -1,11 +1,14 @@
 import React from 'react';
+
+import PropTypes from 'prop-types';
+import { connect } from 'react-redux';
+
+import { getAll, fetchPublished } from '../src/redux/postsRedux';
+
 import { BrowserRouter, Switch, Route } from 'react-router-dom';
-import { Provider } from 'react-redux';
 
 import { createMuiTheme, StylesProvider, ThemeProvider } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
-
-import { store } from './redux/store';
 
 import { MainLayout } from './components/layout/MainLayout/MainLayout';
 import { Homepage } from './components/views/Homepage/Homepage';
@@ -21,26 +24,49 @@ const theme = createMuiTheme({
   },
 });
 
-const App = () => (
-  <Provider store={store}>
-    <BrowserRouter>
-      <StylesProvider injectFirst>
-        <ThemeProvider theme={theme}>
-          <CssBaseline />
-          <MainLayout>
-            <Switch>
-              <Route exact path='/' component={Homepage} />
-              <Route exact path='/myposts' component={MyPosts} />
-              <Route exact path='/post/add' component={PostAdd} />
-              <Route exact path='/post/:id' component={Post} />
-              <Route exact path='/post/:id/edit' component={PostEdit} />
-              <Route path='*' component={NotFound} />
-            </Switch>
-          </MainLayout>
-        </ThemeProvider>
-      </StylesProvider>
-    </BrowserRouter>
-  </Provider>
-);
+class Component extends React.Component {
 
-export { App };
+  static propTypes = {
+    posts: PropTypes.array,
+    fetchPublished: PropTypes.func,
+  };
+
+  componentDidMount() {
+    const { fetchPublished } = this.props;
+    fetchPublished();
+  }
+
+  render() {
+    return (
+      <BrowserRouter>
+        <StylesProvider injectFirst>
+          <ThemeProvider theme={theme}>
+            <CssBaseline />
+            <MainLayout>
+              <Switch>
+                <Route exact path='/' component={Homepage} />
+                <Route exact path='/myposts' component={MyPosts} />
+                <Route exact path='/post/add' component={PostAdd} />
+                <Route exact path='/post/:id' component={Post} />
+                <Route exact path='/post/:id/edit' component={PostEdit} />
+                <Route path='*' component={NotFound} />
+              </Switch>
+            </MainLayout>
+          </ThemeProvider>
+        </StylesProvider>
+      </BrowserRouter>
+    );
+  }
+}
+
+const mapStateToProps = (state) => ({
+  posts: getAll(state),
+});
+
+const mapDispatchToProps = (dispatch) => ({
+  fetchPublished: () => dispatch(fetchPublished()),
+});
+
+const Container = connect(mapStateToProps, mapDispatchToProps)(Component);
+
+export { Container as App };

@@ -27,7 +27,9 @@ app.use('*', (req, res) => {
 });
 
 /* MONGOOSE */
-mongoose.connect('mongodb://localhost:27017/advertWall', { useNewUrlParser: true, useUnifiedTopology: true });
+mongoose.connect('mongodb+srv://ichtys77:!aabb1234@cluster0-wufx8.azure.mongodb.net/advertWall?retryWrites=true&w=majority',
+  { useNewUrlParser: true, useUnifiedTopology: true });
+
 const db = mongoose.connection;
 db.once('open', () => {
   console.log('Successfully connected to the database');
